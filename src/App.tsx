@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from 'react-router-dom';
+import React from 'react';
+import { Authenticated, Unauthenticated } from './views';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends React.Component<any, any> {
+    public render(): JSX.Element {
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/auth">
+                        <Unauthenticated/>
+                    </Route>
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/">
+                        <Authenticated/>
+                    </Route>
+                </Switch>
+            </Router>
+        );
+    }
 }
 
 export default App;
