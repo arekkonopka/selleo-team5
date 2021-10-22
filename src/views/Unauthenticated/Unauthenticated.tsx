@@ -4,19 +4,16 @@ import {
     Switch,
     Route,
 } from 'react-router-dom';
-import { Login } from '../index';
+import {Login} from '../index';
 
-export class Unauthenticated extends React.Component<any, any> {
-
-    public render(): JSX.Element {
-        return (
-            <Router>
-                <Switch>
-                    <Route exact path={`/auth/login`}>
-                        <Login></Login>
-                    </Route>
-                </Switch>
-            </Router>
-        );
-    }
+export function Unauthenticated(): JSX.Element {
+    return (
+        <Router>
+            <Switch>
+                <Route exact path={`/auth/login`}>
+                    <Login></Login>
+                </Route>
+            </Switch>
+        </Router>
+    );
 }

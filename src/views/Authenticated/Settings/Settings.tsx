@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
-export class Settings extends React.Component<any, any> {
-
+export function Settings(): JSX.Element {
+    return (
+        <Fragment></Fragment>
+    );
 }

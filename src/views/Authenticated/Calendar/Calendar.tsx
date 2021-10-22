@@ -1,4 +1,7 @@
 import React from 'react';
 
-export class Calendar extends React.Component<any, any> {
+export function Calendar(props: any) {
+    return (
+        <div className=""></div>
+    );
 }

@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import React from 'react';
 import { Authenticated, Unauthenticated } from './views';
+import {GuardedRoute} from './components';
 
 export class App extends React.Component<any, any> {
     public render(): JSX.Element {
@@ -17,9 +18,7 @@ export class App extends React.Component<any, any> {
                 </Switch>
 
                 <Switch>
-                    <Route exact path="/">
-                        <Authenticated/>
-                    </Route>
+                    <GuardedRoute component={Authenticated} exact path="/" auth={false}/>
                 </Switch>
             </Router>
         );

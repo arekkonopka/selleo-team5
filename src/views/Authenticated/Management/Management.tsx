@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
-export class Management extends React.Component<any, any> {
-
+export function Management(): JSX.Element {
+    return (
+        <Fragment>
+        </Fragment>
+    );
 }
