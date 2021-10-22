@@ -4,12 +4,26 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+} from "@apollo/client";
+
 /* Import all defined styles */
 import './styles/styles.scss';
 
+
+const client = new ApolloClient({
+    uri: 'https://worklog-on-steroids.herokuapp.com/api/ql_open',
+    cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <ApolloProvider client={client}>
+          <App />
+      </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
