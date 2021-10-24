@@ -1,26 +1,30 @@
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
+    Route, BrowserRouter,
 } from 'react-router-dom';
 import React from 'react';
-import {Authenticated, Unauthenticated} from './views';
-import {GuardedRoute, LoginForm} from './components';
+import { Authenticated, Unauthenticated } from './views';
+import { GuardedRoute } from './components';
+import useAuth from './hooks/useAuth';
+import { AuthProvider } from './contexts/AuthProvider';
 
 export function App(): JSX.Element {
-    return (
-        <Router>
-            <Switch>
-                <Route path="/auth">
-                    <Unauthenticated/>
-                </Route>
-            </Switch>
+    const {isLoggedIn} = useAuth();
 
-            <Switch>
-                <Route component={LoginForm} exact path='/'/>
-                <GuardedRoute component={Authenticated} exact path="/tracker" auth={true}/>
-            </Switch>
-        </Router>
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <Router>
+                    <Switch>
+                        <Route path="/auth">
+                            <Unauthenticated/>
+                        </Route>
+                        <GuardedRoute component={Authenticated} exact path="/" auth={isLoggedIn}/>
+                    </Switch>
+                </Router>
+            </AuthProvider>
+        </BrowserRouter>
     );
 }
 

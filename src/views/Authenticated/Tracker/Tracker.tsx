@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-export function Settings(): JSX.Element {
+export function Tracker(): JSX.Element {
     return (
         <Fragment></Fragment>
     );
