@@ -11,9 +11,7 @@ export interface AuthContextType {
     logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType>(
-    {} as AuthContextType
-);
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({children}: { children: ReactNode; }): JSX.Element {
     const [user, setUser] = useState<User>();
@@ -25,22 +23,32 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
     const location = useLocation();
 
     useEffect(() => {
+        const session: string | null = localStorage.getItem('session');
+
+        if (!session) {
+            return;
+        }
+
+        login(session);
+    }, []);
+
+    useEffect(() => {
         if (error) setError(null);
     }, [location.pathname]);
 
     function login(name: string) {
-        setLoading(true);
-
         localStorage.setItem('session', name);
-        setUser({name: name});
+
+        setUser({name});
         setIsLoggedIn(true);
+        setError(null);
+        setLoading(false);
         history.push('/');
     }
 
-    // Call the logout endpoint and then remove the user
-    // from the state.
     function logout(): void {
         localStorage.removeItem('session');
+
         setIsLoggedIn(false);
         setUser(undefined);
         history.push('/auth/login');
@@ -58,8 +66,6 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
         [user, loading, error, isLoggedIn]
     );
 
-    // We only want to render the underlying app after we
-    // assert for the presence of a current user.
     return (
         <AuthContext.Provider value={memoedValue}>
             {children}
