@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import React from 'react';
 import {Authenticated, Unauthenticated} from './views';
-import {GuardedRoute} from './components';
+import {GuardedRoute, LoginForm} from './components';
 
 export function App(): JSX.Element {
     return (
@@ -17,7 +17,8 @@ export function App(): JSX.Element {
             </Switch>
 
             <Switch>
-                <GuardedRoute component={Authenticated} exact path="/" auth={false}/>
+                <Route component={LoginForm} exact path='/'/>
+                <GuardedRoute component={Authenticated} exact path="/tracker" auth={true}/>
             </Switch>
         </Router>
     );
