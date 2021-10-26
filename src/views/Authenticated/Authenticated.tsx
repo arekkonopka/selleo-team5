@@ -10,6 +10,7 @@ import {
 import useAuth from "../../hooks/useAuth";
 import { Settings } from "..";
 import { Route, Switch as RouteSwitch } from "react-router-dom";
+import SingleClient from "./Management/SingleClient/SingleClient";
 
 export function Authenticated(): JSX.Element {
   const { logout } = useAuth();
@@ -38,7 +39,8 @@ export function Authenticated(): JSX.Element {
         </Toolbar>
       </AppBar>
       <RouteSwitch>
-        <Route component={Settings} path="/settings" />
+        <Route component={Settings} path="/settings" exact />
+        <Route component={SingleClient} path="managment/:id" exact />
       </RouteSwitch>
     </Box>
   );
