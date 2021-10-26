@@ -1,19 +1,10 @@
-import { createTheme } from '@mui/material/styles';
-
-// assets
-import colors from 'assets/scss/_themes-vars.module.scss';
-
-// project imports
+import {createTheme, ThemeOptions} from '@mui/material/styles';
+import colors from './../assets/scss/_themes-vars.module.scss';
 import componentStyleOverrides from './compStyleOverride';
 import themePalette from './palette';
 import themeTypography from './typography';
 
-/**
- * Represent theme style and structure as per Material-UI
- * @param {JsonObject} customization customization parameter object
- */
-
-export const theme = (customization) => {
+export const theme = (customization: any) => {
     const color = colors;
 
     const themeOption = {
@@ -31,7 +22,7 @@ export const theme = (customization) => {
         customization
     };
 
-    const themeOptions = {
+    const themeOptions: ThemeOptions = {
         direction: 'ltr',
         palette: themePalette(themeOption),
         mixins: {

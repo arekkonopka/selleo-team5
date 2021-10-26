@@ -1,7 +1,4 @@
-// project imports
-import config from 'config';
-
-// action - state management
+import config from '../config';
 import * as actionTypes from './actions';
 
 export const initialState = {
@@ -11,9 +8,7 @@ export const initialState = {
     opened: true
 };
 
-// ==============================|| CUSTOMIZATION REDUCER ||============================== //
-
-const customizationReducer = (state = initialState, action) => {
+const customizationReducer = (state = initialState, action: any) => {
     let id;
     switch (action.type) {
         case actionTypes.MENU_OPEN:
