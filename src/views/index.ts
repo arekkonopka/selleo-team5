@@ -1,6 +1,6 @@
 import { Calendar } from './Authenticated/Calendar/Calendar';
 import { Management } from './Authenticated/Management/Management';
-import { Settings } from './Authenticated/Settings/Settings';
+import  Settings from './Authenticated/Settings/Settings';
 import { Authenticated } from './Authenticated/Authenticated';
 
 import { Unauthenticated } from './Unauthenticated/Unauthenticated';
