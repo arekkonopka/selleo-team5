@@ -40,7 +40,7 @@ export function Authenticated(): JSX.Element {
       </AppBar>
       <RouteSwitch>
         <Route component={Settings} path="/settings" exact />
-        <Route component={SingleClient} path="managment/:id" exact />
+        <Route component={SingleClient} path="/managment/:id" exact />
       </RouteSwitch>
     </Box>
   );

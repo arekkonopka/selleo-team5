@@ -1,0 +1,11 @@
+.singleClient {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 40px;
+}
+@media (max-width: 1000px) {
+  .singleClient {
+    flex-direction: column;
+  }
+}
