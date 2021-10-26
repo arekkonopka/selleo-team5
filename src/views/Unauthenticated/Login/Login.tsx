@@ -1,13 +1,18 @@
 import React from 'react';
-import {CardContent} from '@mui/material';
+import {Card, CardContent, CardHeader} from '@mui/material';
 import {LoginForm} from '../../../components';
 
 export function Login(): JSX.Element {
     return (
         <React.Fragment>
-            <CardContent>
-                <LoginForm/>
-            </CardContent>
+            <Card variant="outlined">
+                <CardHeader>
+                    WorkTime Tracker
+                </CardHeader>
+                <CardContent>
+                    <LoginForm/>
+                </CardContent>
+            </Card>
         </React.Fragment>
     );
 }

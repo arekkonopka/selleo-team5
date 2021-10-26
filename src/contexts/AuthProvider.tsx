@@ -25,29 +25,15 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
     const location = useLocation();
 
     useEffect(() => {
-        const session: string | null = localStorage.getItem('session');
-
-        if (!session) {
-            return;
-        }
-
-        login(session, false);
-    }, []);
-
-    useEffect(() => {
         if (error) setError(null);
     }, [location.pathname]);
 
-    function login(name: string, withRedirect: boolean = true) {
-        localStorage.setItem('session', name);
-
+    function login(name: string) {
         setUser({name});
         setIsLoggedIn(true);
         setError(null);
         setLoading(false);
-        if (withRedirect) {
-            history.push('/');
-        }
+        history.push('/');
     }
 
     function logout(): void {
