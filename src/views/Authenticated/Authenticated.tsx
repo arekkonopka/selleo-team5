@@ -3,12 +3,11 @@ import {
   Box,
   Button,
   IconButton,
-  Switch,
   Toolbar,
   Typography,
 } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
-import { Settings } from "..";
+import { Settings, TrackingList } from "..";
 import { Route, Switch as RouteSwitch } from "react-router-dom";
 
 export function Authenticated(): JSX.Element {
@@ -39,6 +38,7 @@ export function Authenticated(): JSX.Element {
       </AppBar>
       <RouteSwitch>
         <Route component={Settings} path="/settings" />
+        <Route component={TrackingList} exact path="/tracker" />
       </RouteSwitch>
     </Box>
   );
