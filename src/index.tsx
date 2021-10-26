@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
 import App from './App';
 import {
     ApolloClient,
     InMemoryCache,
     ApolloProvider,
 } from '@apollo/client';
-import './styles/styles.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';

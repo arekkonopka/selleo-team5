@@ -15,6 +15,7 @@ import { ChangeEvent } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import useAuth from '../../../hooks/useAuth';
 import { MainCard } from '../../../ui-component/cards/MainCard';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const ASSIGN_BUNDLED_ID = gql`
     mutation assignBundleId($record: ID) {
@@ -71,38 +72,40 @@ const Settings = () => {
 
     return (
         <div className="settings">
-            <MainCard title="Settings">
-                {loadingBoundleMany ? (
-                    <div className="lds-roller">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                ) : (
-                    <FormGroup>
-                        {boundleMany?.tagBundleMany?.map(
-                            (item: Bundle, index: number) => (
-                                <div key={index} className="bundles">
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                onChange={(e) => onChangeCheckbox(e, item)}
-                                                checked={!!boundleId?.includes(item._id)}
-                                            />
-                                        }
-                                        label={item.name}
-                                    />
-                                    <Box sx={{borderBottom: 0.5, borderColor: 'primary.main'}}/>
-                                </div>
-                            )
-                        )}
-                    </FormGroup>
-                )}
+            <MainCard title="Your bundles">
+                <PerfectScrollbar>
+                    {loadingBoundleMany ? (
+                        <div className="lds-roller">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    ) : (
+                        <FormGroup>
+                            {boundleMany?.tagBundleMany?.map(
+                                (item: Bundle, index: number) => (
+                                    <div key={index} className="bundles">
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    onChange={(e) => onChangeCheckbox(e, item)}
+                                                    checked={!!boundleId?.includes(item._id)}
+                                                />
+                                            }
+                                            label={item.name}
+                                        />
+                                        <Box sx={{borderBottom: 0.5, borderColor: 'primary.main'}}/>
+                                    </div>
+                                )
+                            )}
+                        </FormGroup>
+                    )}
+                </PerfectScrollbar>
             </MainCard>
         </div>
     );

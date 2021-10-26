@@ -34,7 +34,6 @@ export const AuthLogin = ({...others}) => {
                     name: Yup.string().min(5, 'At least 5 characters').max(255, 'Max length exceeded (255)').required('Name is required'),
                 })}
                 onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
-                    console.log('submit');
                     try {
                         if (scriptedRef.current) {
                             setStatus({success: true});
