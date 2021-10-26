@@ -1,10 +1,10 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {ThemeProvider} from '@mui/material/styles';
-import {CssBaseline, StyledEngineProvider} from '@mui/material';
-import {AppProviders, AppWrapper} from './components';
-import {theme} from './themes';
-import NavigationScroll from './layout/NavigationScroll';
+import { useSelector } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import { theme } from './themes';
+import { ThemeRoutes } from './routes';
+import { NavigationScroll } from './layout/NavigationScroll';
 
 export function App(): JSX.Element {
     const customization = useSelector((state: any) => state.customization);
@@ -14,9 +14,7 @@ export function App(): JSX.Element {
             <ThemeProvider theme={theme(customization)}>
                 <CssBaseline/>
                 <NavigationScroll>
-                    <AppProviders>
-                        <AppWrapper/>
-                    </AppProviders>
+                    <ThemeRoutes/>
                 </NavigationScroll>
             </ThemeProvider>
         </StyledEngineProvider>
