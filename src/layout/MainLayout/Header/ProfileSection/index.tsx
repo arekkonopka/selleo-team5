@@ -5,38 +5,30 @@ import { useTheme } from '@mui/material/styles';
 import {
     Avatar,
     Box,
-    Card,
-    CardContent,
     Chip,
     ClickAwayListener,
-    Divider,
-    Grid,
-    InputAdornment,
     List,
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    OutlinedInput,
     Paper,
     Popper,
     Stack,
-    Switch,
     Typography
 } from '@mui/material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { MainCard } from '../../../../ui-component/cards/MainCard';
 import { Transitions } from '../../../../ui-component/extended/Transitions';
 import User1 from '../../../../assets/images/users/user-round.svg';
-import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
+import { IconLogout, IconSettings } from '@tabler/icons';
+import useAuth from '../../../../hooks/useAuth';
 
 const ProfileSection = () => {
     const theme = useTheme();
+    const {user, logout} = useAuth();
     const customization = useSelector((state: any) => state.customization);
     const navigate = useNavigate();
 
-    const [sdm, setSdm] = useState(true);
-    const [value, setValue] = useState('');
-    const [notification, setNotification] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
     /**
@@ -44,7 +36,7 @@ const ProfileSection = () => {
      * */
     const anchorRef = useRef(null);
     const handleLogout = async () => {
-        console.log('Logout');
+        logout();
     };
 
     const handleClose = (event: Event) => {
@@ -148,9 +140,9 @@ const ProfileSection = () => {
                                     <Box sx={{p: 2}}>
                                         <Stack>
                                             <Stack direction="row" spacing={0.5} alignItems="center">
-                                                <Typography variant="h4">Good Morning,</Typography>
+                                                <Typography variant="h4">Welcome </Typography>
                                                 <Typography component="span" variant="h4" sx={{fontWeight: 400}}>
-                                                    Johne Doe
+                                                    {user?.name}
                                                 </Typography>
                                             </Stack>
                                         </Stack>

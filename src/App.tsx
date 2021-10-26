@@ -5,18 +5,21 @@ import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import { theme } from './themes';
 import { ThemeRoutes } from './routes';
 import { NavigationScroll } from './layout/NavigationScroll';
+import { AuthProvider } from './contexts/AuthProvider';
 
 export function App(): JSX.Element {
     const customization = useSelector((state: any) => state.customization);
 
     return (
         <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme(customization)}>
-                <CssBaseline/>
-                <NavigationScroll>
-                    <ThemeRoutes/>
-                </NavigationScroll>
-            </ThemeProvider>
+            <AuthProvider>
+                <ThemeProvider theme={theme(customization)}>
+                    <CssBaseline/>
+                    <NavigationScroll>
+                        <ThemeRoutes/>
+                    </NavigationScroll>
+                </ThemeProvider>
+            </AuthProvider>
         </StyledEngineProvider>
     );
 }

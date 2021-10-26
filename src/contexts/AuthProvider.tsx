@@ -41,7 +41,7 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
 
         setIsLoggedIn(false);
         setUser(null);
-        navigate('/auth/login');
+        navigate('/login');
     }
 
     const memoedValue = useMemo(

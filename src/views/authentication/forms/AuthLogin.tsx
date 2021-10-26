@@ -1,100 +1,45 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import {
     Box,
     Button,
     Checkbox,
-    Divider,
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
     InputLabel,
     OutlinedInput,
     Stack,
-    Typography,
-    useMediaQuery
 } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import useScriptRef from '../../../hooks/useScriptRef';
 import { AnimateButton } from '../../../ui-component/extended/AnimateButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import useAuth from '../../../hooks/useAuth';
 
 export const AuthLogin = ({...others}) => {
+    const {login} = useAuth();
     const theme = useTheme();
     const scriptedRef = useScriptRef();
-    const customization = useSelector((state: any) => state.customization);
     const [checked, setChecked] = useState(true);
-
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event: any) => {
-        event.preventDefault();
-    };
 
     return (
         <>
-            <Grid container direction="column" justifyContent="center" spacing={2}>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex'
-                        }}
-                    >
-                        <Divider sx={{flexGrow: 1}} orientation="horizontal"/>
-
-                        <Button
-                            variant="outlined"
-                            sx={{
-                                cursor: 'unset',
-                                m: 2,
-                                py: 0.5,
-                                px: 7,
-                                borderColor: `${theme.palette.grey[100]} !important`,
-                                color: `${theme.palette.grey[900]}!important`,
-                                fontWeight: 500,
-                                borderRadius: `${customization.borderRadius}px`
-                            }}
-                            disableRipple
-                            disabled
-                        >
-                            OR
-                        </Button>
-
-                        <Divider sx={{flexGrow: 1}} orientation="horizontal"/>
-                    </Box>
-                </Grid>
-                <Grid item xs={12} container alignItems="center" justifyContent="center">
-                    <Box sx={{mb: 2}}>
-                        <Typography variant="subtitle1">Sign in with Email address</Typography>
-                    </Box>
-                </Grid>
-            </Grid>
-
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
+                    name: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    name: Yup.string().min(5, 'At least 5 characters').max(255, 'Max length exceeded (255)').required('Name is required'),
                 })}
                 onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
+                    console.log('submit');
                     try {
                         if (scriptedRef.current) {
                             setStatus({success: true});
                             setSubmitting(false);
+                            login(values.name);
                         }
                     } catch (err: any) {
                         console.error(err);
@@ -108,61 +53,26 @@ export const AuthLogin = ({...others}) => {
             >
                 {({errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values}) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
-                        <FormControl fullWidth error={Boolean(touched.email && errors.email)}
+                        <FormControl fullWidth error={Boolean(touched.name && errors.name)}
                                      sx={{...(theme.typography as any).customInput}}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-email-login">Username</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-login"
-                                type="email"
-                                value={values.email}
-                                name="email"
+                                type="text"
+                                value={values.name}
+                                name="name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                label="Email Address / Username"
+                                label="Username"
                                 inputProps={{}}
                             />
-                            {touched.email && errors.email && (
+                            {touched.name && errors.name && (
                                 <FormHelperText error id="standard-weight-helper-text-email-login">
-                                    {errors.email}
+                                    {errors.name}
                                 </FormHelperText>
                             )}
                         </FormControl>
 
-                        <FormControl
-                            fullWidth
-                            error={Boolean(touched.password && errors.password)}
-                            sx={{...(theme.typography as any).customInput}}
-                        >
-                            <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password-login"
-                                type={showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                name="password"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                            size="large"
-                                        >
-                                            {showPassword ? <Visibility/> : <VisibilityOff/>}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                                inputProps={{}}
-                            />
-                            {touched.password && errors.password && (
-                                <FormHelperText error id="standard-weight-helper-text-password-login">
-                                    {errors.password}
-                                </FormHelperText>
-                            )}
-                        </FormControl>
                         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                             <FormControlLabel
                                 control={
@@ -175,10 +85,6 @@ export const AuthLogin = ({...others}) => {
                                 }
                                 label="Remember me"
                             />
-                            <Typography variant="subtitle1" color="secondary"
-                                        sx={{textDecoration: 'none', cursor: 'pointer'}}>
-                                Forgot Password?
-                            </Typography>
                         </Stack>
                         {errors.submit && (
                             <Box sx={{mt: 3}}>

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { AuthWrapper } from './AuthWrapper';
 import { AuthCardWrapper } from './AuthCardWrapper';
 import { AuthLogin } from './forms/AuthLogin';
-import { Logo } from '../../ui-component/Logo';
 import { AuthFooter } from '../../ui-component/cards/AuthFooter';
+import logo from '../../assets/images/selleo-logo-alt.svg';
+import './Login.scss';
 
 function Login(): JSX.Element {
     const theme = useTheme();
@@ -21,7 +22,7 @@ function Login(): JSX.Element {
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                                     <Grid item sx={{mb: 3}}>
                                         <Link to="#">
-                                            <Logo/>
+                                            <img className="logo" src={logo}/>
                                         </Link>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -38,14 +39,7 @@ function Login(): JSX.Element {
                                                         gutterBottom
                                                         variant={matchDownSM ? 'h3' : 'h2'}
                                                     >
-                                                        Hi, Welcome Back
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="caption"
-                                                        fontSize="16px"
-                                                        textAlign={matchDownSM ? 'center' : 'inherit'}
-                                                    >
-                                                        Enter your credentials to continue
+                                                        Worklog Tracker
                                                     </Typography>
                                                 </Stack>
                                             </Grid>
@@ -53,21 +47,6 @@ function Login(): JSX.Element {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <AuthLogin/>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Divider/>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid item container direction="column" alignItems="center" xs={12}>
-                                            <Typography
-                                                component={Link}
-                                                to="/pages/register/register3"
-                                                variant="subtitle1"
-                                                sx={{textDecoration: 'none'}}
-                                            >
-                                                Don&apos;t have an account?
-                                            </Typography>
-                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </AuthCardWrapper>

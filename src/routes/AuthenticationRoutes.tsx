@@ -10,7 +10,7 @@ export const AuthenticationRoutes = {
     element: <MinimalLayout/>,
     children: [
         {
-            path: '/auth/login',
+            path: '/login',
             element: <AuthLogin/>
         },
     ]
