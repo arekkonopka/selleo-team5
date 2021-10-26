@@ -19,6 +19,7 @@ import { ChangeEvent } from "react";
 import { gql, useMutation } from "@apollo/client";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
+import useAuth from '../../../hooks/useAuth';
 
 const ASSIGN_BUNDLED_ID = gql`
   mutation assignBundleId($record: ID) {
@@ -43,7 +44,7 @@ const UN_ASSIGN_BUNDLE_ID = gql`
 `;
 
 const Settings = () => {
-  const name = JSON.parse(localStorage.getItem("name") || "name");
+  const {user} = useAuth();
 
   const [assignFunction] = useMutation(ASSIGN_BUNDLED_ID, {
     refetchQueries: [GET_TAG_BUNDLES, "getBoundles"],
@@ -79,7 +80,7 @@ const Settings = () => {
       <Card sx={{ width: 400, minHeight: 400, boxShadow: 3 }}>
         <CardContent>
           <Typography sx={{ fontSize: 18 }} gutterBottom>
-            {name || "Name"}
+            {user?.name}
           </Typography>
           <Box sx={{ borderBottom: 1 }}></Box>
           <Typography sx={{ fontSize: 18, margin: 2 }} gutterBottom>
