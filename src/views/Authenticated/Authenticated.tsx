@@ -14,8 +14,6 @@ import { Route, Switch as RouteSwitch } from "react-router-dom";
 export function Authenticated(): JSX.Element {
   const { logout } = useAuth();
 
-  console.log("authenticated");
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
