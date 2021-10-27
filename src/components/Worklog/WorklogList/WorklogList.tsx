@@ -2,11 +2,11 @@ import React from 'react';
 import { WorklogItem } from './WorklogItem/WorklogItem';
 import { WorklogEntry } from '../../../models/WorklogEntry';
 
-const TrackingList = ({worklogItems}: { worklogItems: WorklogEntry[] }) => {
+const WorklogList = ({worklogItems}: { worklogItems: WorklogEntry[] }) => {
     return worklogItems.length > 0 ? (
         <ul>
-            {worklogItems.map((trackingItem) => (
-                <WorklogItem item={trackingItem}/>
+            {worklogItems.map((trackingItem: WorklogEntry) => (
+                <WorklogItem key={trackingItem._id} item={trackingItem}/>
             ))}
         </ul>
     ) : (
@@ -15,4 +15,4 @@ const TrackingList = ({worklogItems}: { worklogItems: WorklogEntry[] }) => {
         </div>
     );
 };
-export default TrackingList;
+export default WorklogList;

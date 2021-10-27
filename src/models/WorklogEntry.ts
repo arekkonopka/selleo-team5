@@ -1,5 +1,5 @@
 export interface WorklogEntry {
-    id: string;
+    _id: string;
     name: string;
     startTime: string;
     tag: {
