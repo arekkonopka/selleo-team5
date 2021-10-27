@@ -18,11 +18,11 @@ import {
 import { MainCard } from '../../../../ui-component/cards/MainCard';
 import { Transitions } from '../../../../ui-component/extended/Transitions';
 import { IconLogout, IconSettings } from '@tabler/icons';
-import useAuth from '../../../../hooks/useAuth';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const ProfileSection = () => {
     const theme = useTheme();
-    const {user, logout} = useAuth();
+    const {user, logout} = useAuth0();
     const customization = useSelector((state: any) => state.customization);
     const navigate = useNavigate();
 
@@ -33,7 +33,9 @@ const ProfileSection = () => {
      * */
     const anchorRef = useRef(null);
     const handleLogout = async () => {
-        logout();
+        logout({
+            returnTo: '',
+        });
     };
 
     const handleClose = (event: Event) => {
@@ -67,117 +69,119 @@ const ProfileSection = () => {
     }, [open]);
 
     return (
-        <>
-            <Chip
-                sx={{
-                    height: '48px',
-                    alignItems: 'center',
-                    borderRadius: '27px',
-                    transition: 'all .2s ease-in-out',
-                    borderColor: theme.palette.primary.light,
-                    backgroundColor: theme.palette.primary.light,
-                    '&[aria-controls="menu-list-grow"], &:hover': {
-                        borderColor: theme.palette.primary.main,
-                        background: `${theme.palette.primary.main}!important`,
-                        color: theme.palette.primary.light,
-                        '& svg': {
-                            stroke: theme.palette.primary.light
-                        }
-                    },
-                    '& .MuiChip-label': {
-                        lineHeight: 0
-                    }
-                }}
-                label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main}/>}
-                variant="outlined"
-                ref={anchorRef}
-                aria-controls={open ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
-                color="primary"
-            />
-            <Popper
-                placement="bottom-end"
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                transition
-                disablePortal
-                popperOptions={{
-                    modifiers: [
-                        {
-                            name: 'offset',
-                            options: {
-                                offset: [0, 14]
+            <>
+                <Chip
+                        sx={{
+                            height: '48px',
+                            alignItems: 'center',
+                            borderRadius: '27px',
+                            transition: 'all .2s ease-in-out',
+                            borderColor: theme.palette.primary.light,
+                            backgroundColor: theme.palette.primary.light,
+                            '&[aria-controls="menu-list-grow"], &:hover': {
+                                borderColor: theme.palette.primary.main,
+                                background: `${theme.palette.primary.main}!important`,
+                                color: theme.palette.primary.light,
+                                '& svg': {
+                                    stroke: theme.palette.primary.light
+                                }
+                            },
+                            '& .MuiChip-label': {
+                                lineHeight: 0
                             }
-                        }
-                    ]
-                }}
-            >
-                {({TransitionProps}) => (
-                    <Transitions in={open} {...TransitionProps}>
-                        <Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                                <MainCard border={false} elevation={16} content={false} boxShadow
-                                          shadow={theme.shadows[16]}>
-                                    <Box sx={{p: 2}}>
-                                        <Stack>
-                                            <Stack direction="row" spacing={0.5} alignItems="center">
-                                                <Typography variant="h4">Welcome </Typography>
-                                                <Typography component="span" variant="h4" sx={{fontWeight: 400}}>
-                                                    {user?.name}
-                                                </Typography>
-                                            </Stack>
-                                        </Stack>
-                                    </Box>
-                                    <Box sx={{p: 2}}>
-                                        <List
-                                            component="nav"
-                                            sx={{
-                                                width: '100%',
-                                                maxWidth: 350,
-                                                minWidth: 300,
-                                                backgroundColor: theme.palette.background.paper,
-                                                borderRadius: '10px',
-                                                [theme.breakpoints.down('md')]: {
-                                                    minWidth: '100%'
-                                                },
-                                                '& .MuiListItemButton-root': {
-                                                    mt: 0.5
-                                                }
-                                            }}
-                                        >
-                                            <ListItemButton
-                                                sx={{borderRadius: `${customization.borderRadius}px`}}
-                                                selected={selectedIndex === 0}
-                                                onClick={(event) => handleListItemClick(event, 0, '/user/account-profile/profile1')}
-                                            >
-                                                <ListItemIcon>
-                                                    <IconSettings stroke={1.5} size="1.3rem"/>
-                                                </ListItemIcon>
-                                                <ListItemText primary={<Typography variant="body2">Account
-                                                    Settings</Typography>}/>
-                                            </ListItemButton>
-                                            <ListItemButton
-                                                sx={{borderRadius: `${customization.borderRadius}px`}}
-                                                selected={selectedIndex === 4}
-                                                onClick={handleLogout}
-                                            >
-                                                <ListItemIcon>
-                                                    <IconLogout stroke={1.5} size="1.3rem"/>
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary={<Typography variant="body2">Logout</Typography>}/>
-                                            </ListItemButton>
-                                        </List>
-                                    </Box>
-                                </MainCard>
-                            </ClickAwayListener>
-                        </Paper>
-                    </Transitions>
-                )}
-            </Popper>
-        </>
+                        }}
+                        label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main}/>}
+                        variant="outlined"
+                        ref={anchorRef}
+                        aria-controls={open ? 'menu-list-grow' : undefined}
+                        aria-haspopup="true"
+                        onClick={handleToggle}
+                        color="primary"
+                />
+                <Popper
+                        placement="bottom-end"
+                        open={open}
+                        anchorEl={anchorRef.current}
+                        role={undefined}
+                        transition
+                        disablePortal
+                        popperOptions={{
+                            modifiers: [
+                                {
+                                    name: 'offset',
+                                    options: {
+                                        offset: [0, 14]
+                                    }
+                                }
+                            ]
+                        }}
+                >
+                    {({TransitionProps}) => (
+                            <Transitions in={open} {...TransitionProps}>
+                                <Paper>
+                                    <ClickAwayListener onClickAway={handleClose}>
+                                        <MainCard border={false} elevation={16} content={false} boxShadow
+                                                  shadow={theme.shadows[16]}>
+                                            <Box sx={{p: 2}}>
+                                                <Stack>
+                                                    <Stack direction="row" spacing={0.5} alignItems="center">
+                                                        <Typography variant="h4">Welcome </Typography>
+                                                        <Typography component="span" variant="h4"
+                                                                    sx={{fontWeight: 400}}>
+                                                            {user?.name}
+                                                        </Typography>
+                                                    </Stack>
+                                                </Stack>
+                                            </Box>
+                                            <Box sx={{p: 2}}>
+                                                <List
+                                                        component="nav"
+                                                        sx={{
+                                                            width: '100%',
+                                                            maxWidth: 350,
+                                                            minWidth: 300,
+                                                            backgroundColor: theme.palette.background.paper,
+                                                            borderRadius: '10px',
+                                                            [theme.breakpoints.down('md')]: {
+                                                                minWidth: '100%'
+                                                            },
+                                                            '& .MuiListItemButton-root': {
+                                                                mt: 0.5
+                                                            }
+                                                        }}
+                                                >
+                                                    <ListItemButton
+                                                            sx={{borderRadius: `${customization.borderRadius}px`}}
+                                                            selected={selectedIndex === 0}
+                                                            onClick={(event) => handleListItemClick(event, 0, '/user/account-profile/profile1')}
+                                                    >
+                                                        <ListItemIcon>
+                                                            <IconSettings stroke={1.5} size="1.3rem"/>
+                                                        </ListItemIcon>
+                                                        <ListItemText primary={<Typography variant="body2">Account
+                                                            Settings</Typography>}/>
+                                                    </ListItemButton>
+                                                    <ListItemButton
+                                                            sx={{borderRadius: `${customization.borderRadius}px`}}
+                                                            selected={selectedIndex === 4}
+                                                            onClick={handleLogout}
+                                                    >
+                                                        <ListItemIcon>
+                                                            <IconLogout stroke={1.5} size="1.3rem"/>
+                                                        </ListItemIcon>
+                                                        <ListItemText
+                                                                primary={<Typography
+                                                                        variant="body2">Logout</Typography>}/>
+                                                    </ListItemButton>
+                                                </List>
+                                            </Box>
+                                        </MainCard>
+                                    </ClickAwayListener>
+                                </Paper>
+                            </Transitions>
+                    )}
+                </Popper>
+            </>
     );
 };
 
