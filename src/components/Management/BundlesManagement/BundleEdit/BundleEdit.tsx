@@ -10,7 +10,7 @@ import './index.scss';
 
 const BundleEdit = () => {
     return (
-            <div className="singleClient">
+            <div className="bundleEdit">
                 <div className="description">
                     <Card sx={{width: 400, minHeight: 400, boxShadow: 3}}>
                         <CardContent>
@@ -41,4 +41,4 @@ const BundleEdit = () => {
     );
 };
 
-export default SingleClient;
+export default BundleEdit;
