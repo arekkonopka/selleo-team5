@@ -3,23 +3,22 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import { theme } from './themes';
-import { ThemeRoutes } from './routes';
 import { NavigationScroll } from './layout/NavigationScroll';
-import { AuthProvider } from './contexts/AuthProvider';
+import { AppProviders, AppWrapper } from './components';
 
 export function App(): JSX.Element {
     const customization = useSelector((state: any) => state.customization);
 
     return (
         <StyledEngineProvider injectFirst>
-            <AuthProvider>
+            <AppProviders>
                 <ThemeProvider theme={theme(customization)}>
                     <CssBaseline/>
                     <NavigationScroll>
-                        <ThemeRoutes/>
+                        <AppWrapper/>
                     </NavigationScroll>
                 </ThemeProvider>
-            </AuthProvider>
+            </AppProviders>
         </StyledEngineProvider>
     );
 }

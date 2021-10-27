@@ -14,8 +14,8 @@ export const FETCH_ENTRIES = gql`
   }
 `;
 
-export const useEntries = () => {
+export const useWorklogEntries = () => {
   const { loading, error, data } = useQuery(FETCH_ENTRIES);
 
-  return { loading, error, data: data.entryMany ?? [] };
+  return { loading, error, data: data?.entryMany ?? [] };
 };

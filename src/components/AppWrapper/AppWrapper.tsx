@@ -1,19 +1,16 @@
 import React from 'react';
-// import {Route, Switch} from 'react-router-dom';
-// import {Authenticated, Unauthenticated} from '../../views';
-// import {GuardedRoute} from '../GuardedRoute/GuardedRoute';
 import useAuth from '../../hooks/useAuth';
+import { ThemeRoutes } from '../../routes';
+import { Navigate } from 'react-router';
 
 export const AppWrapper: React.FC = (): JSX.Element => {
     const {isLoggedIn} = useAuth();
 
-    return (
-        <></>
-        // <Switch>
-        //     <Route path="/auth">
-        //         <Unauthenticated/>
-        //     </Route>
-        //     <GuardedRoute component={Authenticated} path="/" auth={isLoggedIn}/>
-        // </Switch>
-    );
+    console.log('islogged in', isLoggedIn);
+
+    // if (!isLoggedIn) {
+        return <Navigate to="/login" />
+    // }
+
+    return <ThemeRoutes/>
 }
