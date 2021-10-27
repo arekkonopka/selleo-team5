@@ -9,6 +9,7 @@ import {
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import './assets/scss/style.scss';
 
 const client = new ApolloClient({
     uri: 'https://worklog-on-steroids.herokuapp.com/api/ql_open',

@@ -2,7 +2,9 @@ import {
     Box,
     FormGroup,
     FormControlLabel,
-    Checkbox, CircularProgress,
+    Checkbox,
+    CircularProgress,
+    Button,
 } from '@mui/material';
 import { Bundle } from '../../../models/Bundle';
 import React, { ChangeEvent } from 'react';
@@ -13,12 +15,14 @@ import { GET_MERGED_BUNDLES, useMergedBundles } from '../../../queries/useMerged
 import { Loader } from '../../../ui-component/Loader';
 import { ASSIGN_BUNDLED_ID } from '../../../queries/useAssignBundle';
 import { UNASSIGN_BUNDLE_ID } from '../../../queries/useUnassignBundle';
+import { GridAddIcon } from '@mui/x-data-grid';
+import './index.scss';
 
 const BundlesList = () => {
-    const [assignFunction] = useMutation(ASSIGN_BUNDLED_ID, {
+    const [assignFunction, {loading: loadingAssign}] = useMutation(ASSIGN_BUNDLED_ID, {
         refetchQueries: [GET_MERGED_BUNDLES, 'getMergedBundles'],
     });
-    const [unassignFunction] = useMutation(UNASSIGN_BUNDLE_ID, {
+    const [unassignFunction, {loading: loadingUnassign}] = useMutation(UNASSIGN_BUNDLE_ID, {
         refetchQueries: [GET_MERGED_BUNDLES, 'getMergedBundles'],
     });
     const {data: bundles, loading} = useMergedBundles();
@@ -39,37 +43,54 @@ const BundlesList = () => {
         }
     };
     const bundleIds = bundles.my.map(
-        (item: any) => item._id
+            (item: any) => item._id
     );
 
     return (
-        <MainCard title="Bundles management">
-            {loading && <Loader/>}
-            <PerfectScrollbar>
-                {loading ? (
-                    <CircularProgress/>
-                ) : (
-                    <FormGroup>
-                        {bundles.all.map(
-                            (item: Bundle, index: number) => (
-                                <div key={index} className="bundles">
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                onChange={(e) => onChangeCheckbox(e, item)}
-                                                checked={!!bundleIds?.includes(item._id)}
-                                            />
-                                        }
-                                        label={item.name}
-                                    />
-                                    <Box sx={{borderBottom: 0.5, borderColor: 'primary.main'}}/>
-                                </div>
-                            )
+            <MainCard title="Bundles management">
+                <div className="bundlesListWrapper">
+                    <div className="">
+                        {(loading || loadingAssign || loadingUnassign) && <Loader/>}
+                    </div>
+                    <div className="list">
+                        {loading ? (<CircularProgress/>) : (
+                                <PerfectScrollbar
+                                        style={{
+                                            height: 'calc(100vh - 450px)',
+                                        }}>
+                                    <div>
+                                        <FormGroup>
+                                            {bundles.all.map(
+                                                    (item: Bundle, index: number) => (
+                                                            <div key={index} className="bundles">
+                                                                <FormControlLabel
+                                                                        control={
+                                                                            <Checkbox
+                                                                                    onChange={(e) => onChangeCheckbox(e, item)}
+                                                                                    checked={!!bundleIds?.includes(item._id)}
+                                                                            />
+                                                                        }
+                                                                        label={item.name}
+                                                                />
+                                                                <Box sx={{
+                                                                    borderBottom: 0.5,
+                                                                    borderColor: 'primary.light'
+                                                                }}/>
+                                                            </div>
+                                                    )
+                                            )}
+                                        </FormGroup>
+                                    </div>
+                                </PerfectScrollbar>
                         )}
-                    </FormGroup>
-                )}
-            </PerfectScrollbar>
-        </MainCard>
+                    </div>
+                    <div className="actions">
+                        <Button variant="outlined" startIcon={<GridAddIcon/>}>
+                            Add
+                        </Button>
+                    </div>
+                </div>
+            </MainCard>
     );
 };
 

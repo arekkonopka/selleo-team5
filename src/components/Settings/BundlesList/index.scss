@@ -1,0 +1,9 @@
+.bundlesListWrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 375px);
+
+  .actions {
+    padding-top: 20px;
+  }
+}
