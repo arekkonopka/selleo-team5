@@ -1,5 +1,5 @@
-import {useEntries} from './useEntries';
+import { useWorklogEntries } from './useWorklogEntries';
 
 export {
-    useEntries,
+    useWorklogEntries,
 };

@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User } from '../models/User';
 
 export interface AuthContextType {
@@ -21,33 +21,19 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
     const [loading, setLoading] = useState<boolean>(!!session);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!session);
 
-    const history = useHistory();
     const location = useLocation();
-
-    useEffect(() => {
-        const session: string | null = localStorage.getItem('session');
-
-        if (!session) {
-            return;
-        }
-
-        login(session, false);
-    }, []);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) setError(null);
     }, [location.pathname]);
 
-    function login(name: string, withRedirect: boolean = true) {
-        localStorage.setItem('session', name);
-
+    function login(name: string) {
         setUser({name});
         setIsLoggedIn(true);
         setError(null);
         setLoading(false);
-        if (withRedirect) {
-            history.push('/');
-        }
+        navigate('/');
     }
 
     function logout(): void {
@@ -55,7 +41,7 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
 
         setIsLoggedIn(false);
         setUser(null);
-        history.push('/auth/login');
+        navigate('/login');
     }
 
     const memoedValue = useMemo(
