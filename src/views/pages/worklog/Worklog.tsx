@@ -1,23 +1,35 @@
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import { useWorklogEntries } from '../../../queries';
 import { WorklogEntry } from '../../../models/WorklogEntry';
-import { MainCard } from '../../../ui-component/cards/MainCard';
 import WorklogList from '../../../components/Worklog/WorklogList/WorklogList';
 import { Loader } from '../../../ui-component/Loader';
-import { CircularProgress } from '@mui/material';
+import { Card, CardContent, CardHeader, CircularProgress, TextField } from '@mui/material';
+import { DatePicker } from '@mui/lab';
 
 function Worklog(): JSX.Element {
+    const [date, setDate] = useState<Date | null>(new Date());
     const {data, loading} = useWorklogEntries();
 
     const worklogItems: WorklogEntry[] = data;
 
+    const handleDateChange = (date: Date | null) => {
+        setDate(date);
+    }
+
     return (
-        <Fragment>
-            <MainCard title="Worklog">
+        <Card>
+            <CardContent>
+                <DatePicker
+                    value={date}
+                    onChange={handleDateChange}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </CardContent>
+            <CardContent>
                 {loading && <Loader/>}
-                {loading ? <CircularProgress /> : <WorklogList worklogItems={worklogItems}/>}
-            </MainCard>
-        </Fragment>
+                {loading ? <CircularProgress/> : <WorklogList worklogItems={worklogItems}/>}
+            </CardContent>
+        </Card>
     );
 }
 

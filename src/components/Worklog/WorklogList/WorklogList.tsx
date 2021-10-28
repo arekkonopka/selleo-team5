@@ -2,7 +2,7 @@ import React from "react";
 import { WorklogItem } from "./WorklogItem/WorklogItem";
 import { WorklogEntry } from "../../../models/WorklogEntry";
 import TableHead from "@mui/material/TableHead";
-import { TableBody, TableRow } from "@mui/material";
+import { Table, TableBody, TableRow } from '@mui/material';
 import StyledTableCell from "@mui/material/TableCell";
 
 const WorklogList = ({ worklogItems }: { worklogItems: WorklogEntry[] }) => {
@@ -15,7 +15,7 @@ const WorklogList = ({ worklogItems }: { worklogItems: WorklogEntry[] }) => {
     }
 
     return (
-        <>
+        <Table>
             <TableHead>
                 <TableRow>
                     <StyledTableCell></StyledTableCell>
@@ -26,13 +26,11 @@ const WorklogList = ({ worklogItems }: { worklogItems: WorklogEntry[] }) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                <ul>
-                    {worklogItems.map((trackingItem: WorklogEntry) => (
-                        <WorklogItem key={trackingItem._id} item={trackingItem} />
-                    ))}
-                </ul>
+                {worklogItems.map((trackingItem: WorklogEntry) => (
+                    <WorklogItem key={trackingItem._id} item={trackingItem} />
+                ))}
             </TableBody>
-        </>
+        </Table>
     );
 };
 export default WorklogList;
