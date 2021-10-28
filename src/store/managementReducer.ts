@@ -5,7 +5,6 @@ export const initialState = {
 };
 
 const managementReducer = (state = initialState, action: any) => {
-    let id;
     switch (action.type) {
         case actionTypes.SET_SELECTED_MANAGEMENT_BUNDLE:
             return {

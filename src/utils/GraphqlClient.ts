@@ -11,7 +11,7 @@ export const GraphqlClient = (username: string, accessToken: string) => {
             headers: {
                 ...headers,
                 'user-name': username ? username : '',
-                'Authorization': `Bearer YXJ98aHLNXZw3_WE9Pj8PmjIO1zek9Rx`,
+                'Authorization': `Bearer ${accessToken}`,
             },
         };
     });
