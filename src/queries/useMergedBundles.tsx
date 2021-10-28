@@ -1,28 +1,30 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 
 export const GET_MERGED_BUNDLES = gql`
-    query getMergedBundles {
-        getProfile {
-            tagBundles {
-                name
-                _id
-            }
-        }
-        tagBundleMany {
-            name
-            _id
-            description
-        }
+  query getMergedBundles {
+    getProfile {
+      tagBundles {
+        name
+        _id
+      }
     }
+    tagBundleMany {
+      name
+      _id
+      description
+    }
+  }
 `;
 
 export const useMergedBundles = () => {
-    const {loading, error, data} = useQuery(GET_MERGED_BUNDLES);
+  const { loading, error, data } = useQuery(GET_MERGED_BUNDLES);
 
-    return {
-        loading, error, data: {
-            my: data?.getProfile?.tagBundles ?? [],
-            all: data?.tagBundleMany ?? []
-        }
-    };
+  return {
+    loading,
+    error,
+    data: {
+      my: data?.getProfile?.tagBundles ?? [],
+      all: data?.tagBundleMany ?? [],
+    },
+  };
 };

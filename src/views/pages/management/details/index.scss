@@ -1,0 +1,15 @@
+.singleClient {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+@media (max-width: 1000px) {
+  .singleClient {
+    flex-direction: column;
+    align-items: center;
+    .description,
+    .tag {
+      margin: 20px;
+    }
+  }
+}

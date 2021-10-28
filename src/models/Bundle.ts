@@ -1,4 +1,9 @@
+import { Tag } from './Tag';
+
 export interface Bundle {
-  name: string;
-  _id: number;
+    _id: number;
+    name: string;
+    description: string;
+    tags: Tag[];
+    creatorId: string;
 }
