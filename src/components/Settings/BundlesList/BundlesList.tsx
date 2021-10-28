@@ -1,25 +1,31 @@
-import {
-    Box,
-    FormGroup,
-    FormControlLabel,
-    Checkbox,
-    CircularProgress,
-    Button,
-} from '@mui/material';
 import { Bundle } from '../../../models/Bundle';
-import React, { ChangeEvent } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { MainCard } from '../../../ui-component/cards/MainCard';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
     GET_MERGED_BUNDLES,
     useMergedBundles,
 } from '../../../queries/useMergedBundles';
-import { Loader } from '../../../ui-component/Loader';
 import { ASSIGN_BUNDLED_ID } from '../../../queries/useAssignBundle';
 import { UNASSIGN_BUNDLE_ID } from '../../../queries/useUnassignBundle';
-import { GridAddIcon } from '@mui/x-data-grid';
+import { DataGrid, GridRowId, GridSelectionModel } from '@mui/x-data-grid';
 import './index.scss';
+import _ from 'lodash';
+import { Loader } from '../../../ui-component/Loader';
+
+const BUNDLE_COLUMNS: any[] = [
+    {
+        field: 'name',
+        filterable: true,
+        headerName: 'Name',
+        flex: 2,
+    },
+    {
+        field: 'description',
+        filterable: true,
+        headerName: 'Description',
+        flex: 2,
+    },
+];
 
 const BundlesList = () => {
     const [assignFunction, {loading: loadingAssign}] = useMutation(
@@ -35,71 +41,69 @@ const BundlesList = () => {
         }
     );
     const {data: bundles, loading} = useMergedBundles();
+    const rows = bundles.all.map((bundle: Bundle) => {
+        return {
+            id: bundle._id,
+            name: bundle.name,
+            description: bundle.description,
+            tagsCount: bundle?.tags?.length || 0
+        };
+    });
 
-    const onChangeCheckbox = (e: ChangeEvent<HTMLInputElement>, item: Bundle) => {
-        if (e.target.checked === false) {
-            unassignFunction({
-                variables: {
-                    record: item._id,
-                },
-            });
-        } else {
+    const columns: any[] = BUNDLE_COLUMNS;
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+
+    const onChangeCheckbox = (newSelection: GridSelectionModel) => {
+        const changes: GridRowId[] = _.xor(selectionModel, newSelection);
+
+        if (changes.length > 1) {
+            return;
+        }
+
+        const added: GridRowId[] = _.differenceWith(newSelection, selectionModel, _.isEqual);
+        const removed: GridRowId[] = _.differenceWith(selectionModel, newSelection, _.isEqual);
+
+        if (added.length) {
             assignFunction({
                 variables: {
-                    record: item._id,
+                    record: added[0],
                 },
             });
         }
+
+        if (removed.length) {
+            unassignFunction({
+                variables: {
+                    record: removed[0],
+                },
+            });
+        }
+
+        setSelectionModel(newSelection);
     };
-    const bundleIds = bundles.my.map((item: Bundle) => item._id);
+
+    useEffect(() => {
+        const bundleIds: string[] = bundles.my.map((item: Bundle) => item._id);
+        setSelectionModel(bundleIds);
+    }, [loading]);
 
     return (
-        <MainCard title="Bundles management">
-            <div className="bundlesListWrapper">
-                <div className="loaderPlaceholder">
-                    {(loading || loadingAssign || loadingUnassign) && <Loader/>}
-                </div>
-                <div className="list">
-                    {loading ? (
-                        <div className="loaderContainer">
-                            <CircularProgress/>
-                        </div>
-                    ) : (
-                        <PerfectScrollbar style={{height: 'calc(100vh - 450px)'}}>
-                            <div>
-                                {bundles.all.map((item: Bundle, index: number) => {
-                                    return (
-                                        <div key={index} className="bundles">
-                                            <FormControlLabel
-                                                sx={{padding: '15px'}}
-                                                control={
-                                                    <Checkbox
-                                                        onChange={(e) => onChangeCheckbox(e, item)}
-                                                        checked={!!bundleIds?.includes(item._id)}
-                                                    />
-                                                }
-                                                label={item.name}
-                                            />
-                                            <Box
-                                                sx={{
-                                                    borderBottom: 0.5,
-                                                    borderColor: 'primary.light',
-                                                }}
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </PerfectScrollbar>
-                    )}
-                </div>
-                <div className="actions">
-                    <Button variant="outlined" startIcon={<GridAddIcon/>}>
-                        Add
-                    </Button>
-                </div>
-            </div>
-        </MainCard>
+        <div className="bundlesList">
+            { (loadingAssign || loadingUnassign) && <Loader/> }
+            <DataGrid
+                checkboxSelection
+                disableVirtualization={false}
+                loading={loading}
+                rows={rows}
+                columns={columns}
+                disableColumnMenu={false}
+                disableColumnSelector={true}
+                disableExtendRowFullWidth={false}
+                onSelectionModelChange={onChangeCheckbox}
+                selectionModel={selectionModel}
+                showCellRightBorder={false}
+            />
+        </div>
     );
 };
 
