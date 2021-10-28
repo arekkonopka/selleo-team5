@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import {
+    Avatar,
     Box,
     Chip,
     ClickAwayListener,
@@ -25,7 +26,6 @@ const ProfileSection = () => {
     const theme = useTheme();
     const {logout} = useAuth0();
     const {profile}: { profile: Profile } = useSelector((state: any) => state.profile);
-    console.log('profile', profile);
     const customization = useSelector((state: any) => state.customization);
     const navigate = useNavigate();
 
@@ -93,6 +93,20 @@ const ProfileSection = () => {
                         lineHeight: 0
                     }
                 }}
+                icon={
+                    <Avatar
+                        src={profile.picture}
+                        sx={{
+                            ...(theme.typography as any).mediumAvatar,
+                            margin: '8px 0 8px 8px !important',
+                            cursor: 'pointer'
+                        }}
+                        ref={anchorRef}
+                        aria-controls={open ? 'menu-list-grow' : undefined}
+                        aria-haspopup="true"
+                        color="inherit"
+                    />
+                }
                 label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main}/>}
                 variant="outlined"
                 ref={anchorRef}
