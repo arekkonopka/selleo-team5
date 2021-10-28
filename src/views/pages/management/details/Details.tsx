@@ -15,14 +15,16 @@ import { UPDATE_BUNDLE } from '../../../../queries/useUpdateBundle';
 import { useTagPaginated } from '../../../../queries/usePaginationData';
 import { useSelector } from 'react-redux';
 import { Bundle } from '../../../../models/Bundle';
-import useAuth from '../../../../hooks/useAuth';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Details(): JSX.Element {
-    const {user} = useAuth();
+    const {user} = useAuth0();
     const [numberPage, setNumberPage] = useState(1);
     const [inputValue, setInputValue] = useState({});
 
-    const currentBundle: Bundle = useSelector((state: any) => state.management.selectedBundle);
+    const currentBundle: Bundle = useSelector(
+        (state: any) => state.management.selectedBundle
+    );
     const [updateBundle] = useMutation(UPDATE_BUNDLE);
     const {loading, data: dataPagination, getTags} = useTagPaginated();
 
@@ -34,7 +36,10 @@ function Details(): JSX.Element {
                 record: inputValue,
             },
         });
-        setInputValue({name: currentBundle.name, description: currentBundle.description});
+        setInputValue({
+            name: currentBundle.name,
+            description: currentBundle.description,
+        });
     };
 
     const onChangePagination = (event: any, page: number) => {
@@ -103,16 +108,11 @@ function Details(): JSX.Element {
                 </Card>
             </div>
             <div className="tags">
-                <Card sx={{width: 400, minHeight: 521, boxShadow: 3}}>
-                    <Typography
-                        sx={{fontSize: 18, textAlign: 'center', marginTop: 2}}
-                        gutterBottom
-                    >
+                <Card sx={{width: 400, minHeight: 521, boxShadow: 3, padding: 2}}>
+                    <Typography sx={{fontSize: 18, textAlign: 'center'}} gutterBottom>
                         Lista tagów:
                     </Typography>
                     <CardContent sx={{minHeight: '400px'}}>
-                        {/* w jaki sposob zrobic tak zeby po nacisnieciu page przechodzilo gladko, bez ladowania */}
-
                         {loading ? (
                             <Box
                                 sx={{
