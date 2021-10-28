@@ -6,4 +6,15 @@
   .actions {
     padding-top: 20px;
   }
+
+  .list {
+    flex-grow: 1;
+  }
+
+  .loaderContainer {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
 }

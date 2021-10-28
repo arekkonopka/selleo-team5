@@ -34,21 +34,6 @@ const BUNDLE_COLUMNS: any[] = [
         headerName: 'Tags count',
         width: 150,
     },
-    {
-        field: 'edit',
-        filterable: false,
-        headerName: 'Edit',
-        sortable: false,
-        renderCell: (...args: any[]) => {
-            // console.log(args);
-            return (
-                    <IconButton aria-label="delete" size="small">
-                        <EditIcon fontSize="inherit"/>
-                    </IconButton>
-            )
-        },
-        width: 100,
-    },
 ];
 
 export function BundlesList(): JSX.Element {
@@ -60,8 +45,7 @@ export function BundlesList(): JSX.Element {
             id: bundle._id,
             name: bundle.name,
             description: bundle.description,
-            tagsCount: bundle?.tags?.length || 0,
-            edit: bundle._id,
+            tagsCount: bundle?.tags?.length || 0
         };
     });
     const columns: any[] = BUNDLE_COLUMNS;
@@ -77,10 +61,10 @@ export function BundlesList(): JSX.Element {
                         loading={loading}
                         rows={rows}
                         columns={columns}
-                        disableColumnSelector={true}
-                        disableExtendRowFullWidth={false}
+                        // disableColumnSelector={true}
+                        // disableExtendRowFullWidth={false}
                         onRowClick={openRowDetails}
-                        showCellRightBorder={false}
+                        // showCellRightBorder={false}
                 />
             </div>
     );
