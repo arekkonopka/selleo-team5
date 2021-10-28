@@ -4,6 +4,8 @@ import { Bundle } from '../../../../models/Bundle';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
+import { SET_MENU, SET_SELECTED_MANAGEMENT_BUNDLE } from '../../../../store/actions';
+import { useDispatch } from 'react-redux';
 
 const BUNDLE_COLUMNS: any[] = [
     {
@@ -50,6 +52,7 @@ const BUNDLE_COLUMNS: any[] = [
 ];
 
 export function BundlesList(): JSX.Element {
+    const dispatch = useDispatch();
     const {data: bundles, loading} = useMyBundles();
     const navigate = useNavigate();
     const rows = bundles.map((bundle: Bundle) => {
@@ -64,6 +67,7 @@ export function BundlesList(): JSX.Element {
     const columns: any[] = BUNDLE_COLUMNS;
 
     const openRowDetails = (data: any) => {
+        dispatch({type: SET_SELECTED_MANAGEMENT_BUNDLE, bundle: data})
         navigate(`/management/${data.id}`);
     }
 
@@ -74,7 +78,6 @@ export function BundlesList(): JSX.Element {
                         rows={rows}
                         columns={columns}
                         disableColumnSelector={true}
-                        // disableColumnMenu={true}
                         disableExtendRowFullWidth={false}
                         onRowClick={openRowDetails}
                         showCellRightBorder={false}
