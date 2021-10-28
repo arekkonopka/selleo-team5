@@ -4,16 +4,9 @@ import { WorklogEntry } from "../../../models/WorklogEntry";
 import TableHead from "@mui/material/TableHead";
 import { Table, TableBody, TableRow } from '@mui/material';
 import StyledTableCell from "@mui/material/TableCell";
+import { Bundle } from '../../../models/Bundle';
 
-const WorklogList = ({ worklogItems }: { worklogItems: WorklogEntry[] }) => {
-    if (worklogItems.length === 0) {
-        return (
-            <div>
-                <p>You haven't got any items to track yet. </p>
-            </div>
-        );
-    }
-
+const WorklogList = ({ worklogItems, bundlesWithTags }: { worklogItems: WorklogEntry[], bundlesWithTags: Bundle[] }) => {
     return (
         <Table>
             <TableHead>
