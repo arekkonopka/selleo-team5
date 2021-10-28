@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from '@apollo/client';
 
 export const FETCH_ENTRIES = gql`
   query getEntriesForDate($date: Date) {
@@ -16,8 +16,12 @@ export const FETCH_ENTRIES = gql`
   }
 `;
 
-export const useWorklogEntries = () => {
-  const { loading, error, data } = useQuery(FETCH_ENTRIES);
+export const useWorklogEntries = (date: Date | null) => {
+    const [getWorklogEntries, {loading, error, data}] = useLazyQuery(FETCH_ENTRIES, {
+        variables: {
+            date: date
+        }
+    });
 
-  return { loading, error, data: data?.entryMany ?? [] };
+    return {getWorklogEntries, loading, error, data: data?.entryMany ?? []};
 };
