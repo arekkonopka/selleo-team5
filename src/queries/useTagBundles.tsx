@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 
 export const GET_ALL_BUNDLES = gql`
     query getBundleMany {
@@ -6,12 +6,13 @@ export const GET_ALL_BUNDLES = gql`
             name
             _id
             description
+            creatorId
         }
     }
 `;
 
 export const useTagBundlesMany = () => {
-    const {loading, error, data} = useQuery(GET_ALL_BUNDLES);
+  const { loading, error, data } = useQuery(GET_ALL_BUNDLES);
 
-    return {loading, error, data: data?.tagBundleMany ?? []};
+  return { loading, error, data: data?.tagBundleMany ?? [] };
 };
