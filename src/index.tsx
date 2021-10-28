@@ -11,13 +11,13 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <Auth0ProviderWithHistory>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <BrowserRouter>
-                            <App/>
-                        </BrowserRouter>
-                </LocalizationProvider>
-            </Auth0ProviderWithHistory>
+            <BrowserRouter>
+                <Auth0ProviderWithHistory>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <App/>
+                    </LocalizationProvider>
+                </Auth0ProviderWithHistory>
+            </BrowserRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

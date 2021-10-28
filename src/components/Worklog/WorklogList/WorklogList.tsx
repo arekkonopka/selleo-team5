@@ -25,25 +25,6 @@ const WorklogList = ({ worklogItems, bundlesWithTags }: { worklogItems: WorklogE
         </TableBody>
       </Table>
     );
-  }
+}
 
-  return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <StyledTableCell></StyledTableCell>
-          <StyledTableCell align="right"></StyledTableCell>
-          <StyledTableCell align="right"></StyledTableCell>
-          <StyledTableCell align="right"></StyledTableCell>
-          <StyledTableCell align="right"></StyledTableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {worklogItems.map((trackingItem: WorklogEntry) => (
-          <WorklogItem key={trackingItem._id} item={trackingItem} />
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
 export default WorklogList;
