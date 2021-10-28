@@ -4,6 +4,8 @@ export const FETCH_ENTRIES = gql`
   query getEntriesForDate($date: Date) {
     entryMany(filter: { date: $date }) {
       _id
+      startTime
+      endTime
       tag {
         name
         tagBundle {
