@@ -4,7 +4,7 @@ import { Bundle } from '../../../../models/Bundle';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import { SET_MENU, SET_SELECTED_MANAGEMENT_BUNDLE } from '../../../../store/actions';
+import { SET_SELECTED_MANAGEMENT_BUNDLE } from '../../../../store/actions';
 import { useDispatch } from 'react-redux';
 
 const BUNDLE_COLUMNS: any[] = [
