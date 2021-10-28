@@ -16,7 +16,7 @@ export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export function AuthProvider({children}: { children: ReactNode; }): JSX.Element {
     const session: string | null = localStorage.getItem('session');
 
-    const [user, setUser] = useState<User | null>(session ? {name: session} : null);
+    const [user, setUser] = useState<User | null>(session ? {name: session, id: ''} : null);
     const [error, setError] = useState<any>();
     const [loading, setLoading] = useState<boolean>(!!session);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!session);
@@ -29,7 +29,7 @@ export function AuthProvider({children}: { children: ReactNode; }): JSX.Element 
     }, [location.pathname]);
 
     function login(name: string) {
-        setUser({name});
+        setUser({name, id: ''});
         setIsLoggedIn(true);
         setError(null);
         setLoading(false);

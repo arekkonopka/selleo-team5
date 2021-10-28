@@ -5,4 +5,5 @@ export interface Bundle {
     name: string;
     description: string;
     tags: Tag[];
+    creatorId: string;
 }
