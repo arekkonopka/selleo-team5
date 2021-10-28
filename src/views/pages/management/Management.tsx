@@ -4,9 +4,9 @@ import { BundlesList } from '../../../components/Management/BundlesManagement/Bu
 
 function Management(): JSX.Element {
     return (
-            <MainCard title="Management">
-                <BundlesList/>
-            </MainCard>
+        <MainCard title="Management">
+            <BundlesList/>
+        </MainCard>
     );
 }
 

@@ -1,8 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { useMyBundles } from '../../../../queries/useMyBundles';
 import { Bundle } from '../../../../models/Bundle';
-import { IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { SET_SELECTED_MANAGEMENT_BUNDLE } from '../../../../store/actions';
 import { useDispatch } from 'react-redux';
@@ -13,26 +11,26 @@ const BUNDLE_COLUMNS: any[] = [
         filterable: true,
         headerName: 'ID',
         sortable: false,
-        width: 220,
+        flex: 1,
     },
     {
         field: 'name',
         filterable: true,
         headerName: 'Name',
-        width: 180,
+        flex: 2,
     },
     {
         field: 'description',
         filterable: true,
         headerName: 'Description',
-        width: 280,
+        flex: 2,
     },
     {
         field: 'tagsCount',
         filterable: false,
         sortable: false,
         headerName: 'Tags count',
-        width: 150,
+        flex: 1,
     },
 ];
 
@@ -58,13 +56,15 @@ export function BundlesList(): JSX.Element {
     return (
             <div style={{height: 380, width: '100%'}}>
                 <DataGrid
+                    disableVirtualization={false}
                         loading={loading}
                         rows={rows}
                         columns={columns}
-                        // disableColumnSelector={true}
-                        // disableExtendRowFullWidth={false}
+                        disableColumnMenu={true}
+                        disableColumnSelector={true}
+                        disableExtendRowFullWidth={false}
                         onRowClick={openRowDetails}
-                        // showCellRightBorder={false}
+                        showCellRightBorder={false}
                 />
             </div>
     );
