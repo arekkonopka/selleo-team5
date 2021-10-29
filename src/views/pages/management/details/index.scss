@@ -1,15 +1,61 @@
 .singleClient {
   display: flex;
   justify-content: space-around;
-  margin-top: 40px;
 }
+
+.description,
+.tags {
+  width: 100%;
+  height: calc(100vh - 135px);
+}
+
+.description {
+  margin-right: 10px;
+}
+
+.tags {
+  margin-left: 10px;
+}
+
 @media (max-width: 1000px) {
   .singleClient {
     flex-direction: column;
     align-items: center;
+
     .description,
     .tag {
-      margin: 20px;
+      height: 400px;
     }
   }
+}
+
+.tagItem {
+  display: flex;
+  align-items: center;
+
+  .tagItemIcon {
+    margin-right: 15px;
+  }
+}
+
+.detailsCard {
+  width: 100%;
+}
+
+.inputInDetails {
+  padding: 15px 0;
+}
+
+.btnContainer {
+  padding-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.detailsLoaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 135px);
 }

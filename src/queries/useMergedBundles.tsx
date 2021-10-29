@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 export const GET_MERGED_BUNDLES = gql`
   query getMergedBundles {
     getProfile {
+      _id
       tagBundles {
         name
         _id
@@ -26,5 +27,6 @@ export const useMergedBundles = () => {
       my: data?.getProfile?.tagBundles ?? [],
       all: data?.tagBundleMany ?? [],
     },
+    profileId: data?.getProfile?._id ?? ''
   };
 };

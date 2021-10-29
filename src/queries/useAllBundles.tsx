@@ -11,7 +11,7 @@ export const GET_ALL_BUNDLES = gql`
     }
 `;
 
-export const useTagBundlesMany = () => {
+export const useAllBundles = () => {
   const { loading, error, data } = useQuery(GET_ALL_BUNDLES);
 
   return { loading, error, data: data?.tagBundleMany ?? [] };

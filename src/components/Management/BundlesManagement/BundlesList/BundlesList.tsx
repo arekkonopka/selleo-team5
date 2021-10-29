@@ -2,8 +2,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useMyBundles } from '../../../../queries/useMyBundles';
 import { Bundle } from '../../../../models/Bundle';
 import { useNavigate } from 'react-router-dom';
-import { SET_SELECTED_MANAGEMENT_BUNDLE } from '../../../../store/actions';
-import { useDispatch } from 'react-redux';
+import './index.scss';
 
 const BUNDLE_COLUMNS: any[] = [
     {
@@ -35,7 +34,6 @@ const BUNDLE_COLUMNS: any[] = [
 ];
 
 export function BundlesList(): JSX.Element {
-    const dispatch = useDispatch();
     const {data: bundles, loading} = useMyBundles();
     const navigate = useNavigate();
     const rows = bundles.map((bundle: Bundle) => {
@@ -49,12 +47,11 @@ export function BundlesList(): JSX.Element {
     const columns: any[] = BUNDLE_COLUMNS;
 
     const openRowDetails = (data: any) => {
-        dispatch({type: SET_SELECTED_MANAGEMENT_BUNDLE, bundle: data})
         navigate(`/management/${data.id}`);
     }
 
     return (
-            <div style={{height: 380, width: '100%'}}>
+            <div className="bundlesList">
                 <DataGrid
                     disableVirtualization={false}
                         loading={loading}

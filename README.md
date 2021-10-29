@@ -4,10 +4,12 @@
 2. Pokazanie menu oraz profilu
 3. Przejście do Dashboard
 4. Przejście do workologu
-   1. 
-
+   1.
 5. Przejscie do kalendarza
 6. Przejdzie do zarzadzania
+   1. Pokazanie listy
+   2. Pokazanie przejścia routingu
+   3. Pokazanie szczegółów z paginacją oraz edycją w formiku.
 7. Przejscie do ustawień
    1. Pokazanie możliwości filtrowania i sortowania
    2. Pokazanie wyszukiwania

@@ -64,7 +64,7 @@ const BundlesList = () => {
             refetchQueries: [GET_MERGED_BUNDLES, 'getMergedBundles']
         }
     );
-    const {data: bundles, loading} = useMergedBundles();
+    const {data: bundles, loading, profileId} = useMergedBundles();
     const rows = bundles.all.map((bundle: Bundle) => {
         return {
             id: bundle._id,
@@ -148,6 +148,7 @@ const BundlesList = () => {
                     record: {
                         name: values.name,
                         description: values.description,
+                        creatorId: profileId
                     },
                 },
             }).then(
@@ -184,7 +185,7 @@ const BundlesList = () => {
                             <Formik initialValues={formik.initialValues} onSubmit={() => {
                             }}>
                                 <Form onSubmit={formik.handleSubmit}>
-                                    <div className="input">
+                                    <div className="inputInSettings">
                                         <TextField
                                             fullWidth
                                             id="name"
@@ -197,7 +198,7 @@ const BundlesList = () => {
                                         />
                                     </div>
 
-                                    <div className="input">
+                                    <div className="inputInSettings">
                                         <TextField
                                             fullWidth
                                             id="description"
