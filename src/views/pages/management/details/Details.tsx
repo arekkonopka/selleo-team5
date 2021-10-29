@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
     Box,
-    Card,
     CardContent,
     TextField,
     Typography,
@@ -56,7 +55,8 @@ function Details(): JSX.Element {
                 () => {
                     formik.setValues({name: values.name, description: values.description})
                 },
-                () => {}
+                () => {
+                }
             );
         },
     });
@@ -103,7 +103,8 @@ function Details(): JSX.Element {
             <div className="description">
                 <MainCard sx={{boxShadow: 3}} title="Details" className="detailsCard">
                     <CardContent>
-                        <Formik initialValues={formik.initialValues} onSubmit={() => {}}>
+                        <Formik initialValues={formik.initialValues} onSubmit={() => {
+                        }}>
                             <Form onSubmit={formik.handleSubmit}>
                                 <div className="inputInDetails">
                                     <TextField
@@ -132,12 +133,16 @@ function Details(): JSX.Element {
                                     />
                                 </div>
 
-                                {updatingBundleError && (<Alert severity="error">An unexpected error occurred while updating bundle :(</Alert>)}
+                                {updatingBundleError && (
+                                    <Alert severity="error">An unexpected error occurred while updating bundle
+                                        :(</Alert>)}
 
                                 {
                                     isAllowed ? (
                                         <div className="btnContainer">
-                                            <Button variant="contained" startIcon={<SaveIcon />} disabled={updatingBundle || !formik.isValid} onClick={formik.submitForm}>
+                                            <Button variant="contained" startIcon={<SaveIcon/>}
+                                                    disabled={updatingBundle || !formik.isValid}
+                                                    onClick={formik.submitForm}>
                                                 Save
                                             </Button>
                                         </div>

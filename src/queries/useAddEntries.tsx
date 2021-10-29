@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const ADD_ENTRIES = gql`
+export const ADD_ENTRY = gql`
   mutation createEntry($record: EntryCreateTypeInput) {
     createEntry(record: $record) {
       _id

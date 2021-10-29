@@ -8,12 +8,15 @@ import { DatePicker } from '@mui/lab';
 import { useMyBundles } from '../../../queries/useMyBundles';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import { add, set, sub } from 'date-fns';
+import { add, format, set, sub } from 'date-fns';
 import './index.scss';
+
+// 2021-10-21T00:00:00.000Z
+const DATE_FORMAT = 'yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'';
 
 function Worklog(): JSX.Element {
     const [date, setDate] = useState<Date>(set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}));
-    const {data, loading: loadingWorklogEntries, getWorklogEntries} = useWorklogEntries(date);
+    const {data, loading: loadingWorklogEntries, getWorklogEntries} = useWorklogEntries(format(date, DATE_FORMAT));
     const {data: bundlesWithTags, loading: loadingBundles} = useMyBundles();
     const loading: boolean = loadingWorklogEntries || loadingBundles;
 
@@ -39,10 +42,8 @@ function Worklog(): JSX.Element {
 
     useEffect(() => {
         console.log('date', date);
-        getWorklogEntries({variables: {date: date}});
+        getWorklogEntries({variables: {date: format(date, DATE_FORMAT)}});
     }, [date]);
-
-    const emptyList: boolean = worklogItems.length === 0;
 
     return (
         <Card>
@@ -69,13 +70,7 @@ function Worklog(): JSX.Element {
                     </div>
                 )}
 
-                {(!loading && emptyList) && (
-                    <div className="placehoderContainer">
-                        <p>You haven't got any items to track yet. </p>
-                    </div>
-                )}
-
-                {(!loading && !emptyList) && <WorklogList worklogItems={worklogItems} bundlesWithTags={bundlesWithTags}/> }
+                {!loading && <WorklogList worklogItems={worklogItems} bundlesWithTags={bundlesWithTags}/> }
             </CardContent>
         </Card>
     );
