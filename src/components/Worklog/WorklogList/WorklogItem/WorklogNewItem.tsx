@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/client';
 import { MenuItem, TableRow, TableCell, TextField, IconButton, Autocomplete } from '@mui/material';
 import { Select } from '@material-ui/core';
 import { TimePicker } from '@mui/lab';
-import { ADD_ENTRY } from '../../../../queries/useAddEntries';
 import { FETCH_ENTRIES } from '../../../../queries/useWorklogEntries';
 import { Bundle } from '../../../../models/Bundle';
 import { Entry } from '../WorklogList';
@@ -23,9 +22,6 @@ export function WorklogNewItem({
     const [selectedBundle, setSelectedBundle] = useState(bundlesWithTags.find((item: Bundle) => item.name === entry.bundle));
     const [startTime, setStartTime] = useState(entry.startTimeRaw);
     const [endTime, setEndTime] = useState('');
-    const [addEntry] = useMutation(ADD_ENTRY, {
-        refetchQueries: [FETCH_ENTRIES, 'getEntriesForDate'],
-    });
     const [updateEntry] = useMutation(UPDATE_ENTRY, {
         refetchQueries: [FETCH_ENTRIES, 'getEntriesForDate'],
     });
@@ -78,11 +74,11 @@ export function WorklogNewItem({
     }, [bundle]);
 
     useEffect(() => {
-        handleChangeEntry();
+        // handleChangeEntry();
     }, [bundle, tag, startTime, endTime]);
 
     return (
-        <TableRow>
+        <TableRow key={entry.id}>
             <TableCell>
                 <TimePicker
                     value={startTime}

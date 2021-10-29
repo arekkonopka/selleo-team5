@@ -12,7 +12,7 @@ import { add, format, set, sub } from 'date-fns';
 import './index.scss';
 
 // 2021-10-21T00:00:00.000Z
-const DATE_FORMAT = 'yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'';
+export const DATE_FORMAT = 'yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'';
 
 function Worklog(): JSX.Element {
     const [date, setDate] = useState<Date>(set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}));

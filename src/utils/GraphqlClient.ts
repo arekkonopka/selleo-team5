@@ -3,6 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 
 export const GraphqlClient = (username: string, accessToken: string) => {
     const httpLink = createHttpLink({
+        // uri: 'https://worklog-on-steroids.herokuapp.com/api/ql_open',
         uri: 'https://worklog-on-steroids.herokuapp.com/api/ql',
     });
 
@@ -10,7 +11,7 @@ export const GraphqlClient = (username: string, accessToken: string) => {
         return {
             headers: {
                 ...headers,
-                'user-name': username ? username : '',
+                // 'user-name': username ? username : '',
                 'Authorization': `Bearer ${accessToken}`,
             },
         };
