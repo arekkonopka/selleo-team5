@@ -19,12 +19,12 @@ export const MainRoutes = {
     path: '/',
     element: <MainLayout/>,
     children: [
+        // {
+        //     path: '/',
+        //     element: <DashboardDefault/>
+        // },
         {
             path: '/',
-            element: <DashboardDefault/>
-        },
-        {
-            path: '/worklog',
             element: <TrackerPage/>
         },
         {

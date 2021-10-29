@@ -6,30 +6,30 @@ const dashboard = {
     title: 'Worklog Tracker',
     type: 'group',
     children: [
-        {
-            id: 'default',
-            title: 'Dashboard',
-            type: 'item',
-            url: '/',
-            icon: icons.IconDashboard,
-            breadcrumbs: false
-        },
+        // {
+        //     id: 'default',
+        //     title: 'Dashboard',
+        //     type: 'item',
+        //     url: '/',
+        //     icon: icons.IconDashboard,
+        //     breadcrumbs: false
+        // },
         {
             id: 'worklog',
             title: 'Worklog',
             type: 'item',
-            url: '/worklog',
+            url: '/',
             icon: icons.IconCalendarTime,
             breadcrumbs: false
         },
-        {
-            id: 'calendar',
-            title: 'Calendar',
-            type: 'item',
-            url: '/calendar',
-            icon: icons.IconCalendar,
-            breadcrumbs: false
-        },
+        // {
+        //     id: 'calendar',
+        //     title: 'Calendar',
+        //     type: 'item',
+        //     url: '/calendar',
+        //     icon: icons.IconCalendar,
+        //     breadcrumbs: false
+        // },
         {
             id: 'management',
             title: 'Management',

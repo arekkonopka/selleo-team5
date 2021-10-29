@@ -15,8 +15,8 @@ import { UPDATE_ENTRY } from '../../../../queries/useUpdateEntry';
 export function WorklogNewItem({
                                    entry,
                                    bundlesWithTags,
-                                   onChange
-                               }: { entry: Entry, bundlesWithTags: Bundle[], onChange: Function }): JSX.Element {
+                                   onAddNewRecord
+                               }: { entry: Entry, bundlesWithTags: Bundle[], onAddNewRecord: Function }): JSX.Element {
     const [bundle, setBundle] = useState(entry.bundle);
     const [tag, setTag] = useState(entry.tag);
     const [selectedBundle, setSelectedBundle] = useState(bundlesWithTags.find((item: Bundle) => item.name === entry.bundle));
@@ -38,7 +38,6 @@ export function WorklogNewItem({
                 id: entry.id
             },
         }).then(() => {
-            onChange();
         });
     };
 
@@ -60,7 +59,6 @@ export function WorklogNewItem({
                 }
             },
         }).then(() => {
-            onChange();
         });
     };
 
@@ -78,7 +76,7 @@ export function WorklogNewItem({
     }, [bundle, tag, startTime, endTime]);
 
     return (
-        <TableRow key={entry.id}>
+        <TableRow>
             <TableCell>
                 <TimePicker
                     value={startTime}

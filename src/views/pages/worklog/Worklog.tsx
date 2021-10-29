@@ -40,8 +40,11 @@ function Worklog(): JSX.Element {
         setDate(newDate);
     }
 
+    const refreshList = () => {
+        getWorklogEntries({variables: {date: format(date, DATE_FORMAT)}});
+    };
+
     useEffect(() => {
-        console.log('date', date);
         getWorklogEntries({variables: {date: format(date, DATE_FORMAT)}});
     }, [date]);
 
@@ -69,8 +72,9 @@ function Worklog(): JSX.Element {
                         <CircularProgress size="md"/>
                     </div>
                 )}
-
-                {!loading && <WorklogList worklogItems={worklogItems} bundlesWithTags={bundlesWithTags}/> }
+                {!loading && <WorklogList
+                    worklogItems={worklogItems}
+                    bundlesWithTags={bundlesWithTags}/> }
             </CardContent>
         </Card>
     );

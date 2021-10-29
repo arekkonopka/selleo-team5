@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { WorklogEntry } from "../../../models/WorklogEntry";
-import TableHead from "@mui/material/TableHead";
-import { Fab, Table, TableBody, TableRow } from "@mui/material";
-import StyledTableCell from "@mui/material/TableCell";
-import { Bundle } from "../../../models/Bundle";
+import React, { useState } from 'react';
+import { WorklogEntry } from '../../../models/WorklogEntry';
+import TableHead from '@mui/material/TableHead';
+import { Fab, Table, TableBody, TableRow } from '@mui/material';
+import StyledTableCell from '@mui/material/TableCell';
 import { Bundle } from '../../../models/Bundle';
 import AddIcon from '@mui/icons-material/Add';
 import './index.scss';
@@ -11,9 +10,9 @@ import { WorklogNewItem } from './WorklogItem/WorklogNewItem';
 import { useMutation } from '@apollo/client';
 import { ADD_ENTRY } from '../../../queries/useAddEntries';
 import { FETCH_ENTRIES } from '../../../queries/useWorklogEntries';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import { DATE_FORMAT } from '../../../views/pages/worklog/Worklog';
-import AssignmentIcon from "@mui/icons-material/Assignment";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export interface Entry {
     id: string | null;
@@ -49,25 +48,27 @@ const WorklogList = ({worklogItems, bundlesWithTags}: { worklogItems: WorklogEnt
             endTime: endTime,
         };
     });
+    console.log('entriesTemp', entriesTemp);
     const [entries, setEntries] = useState(entriesTemp);
     const [addEntry] = useMutation(ADD_ENTRY, {
         refetchQueries: [FETCH_ENTRIES, 'getEntriesForDate'],
     });
 
     const handleAddNewEntry = () => {
+        const dateTemp = set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0});
         addEntry({
             variables: {
                 record: {
-                    date: format(new Date(), DATE_FORMAT),
+                    date: format(dateTemp, DATE_FORMAT),
                 },
             },
         }).then((response) => {
-            console.log('response', response);
+
             const newEntries = [...entries];
             const newItem = {
                 id: response.data.createEntry._id,
                 index: newEntries.length + 1,
-                date: new Date(response.data.createEntry.date),
+                date: dateTemp,
                 startTimeRaw: '',
                 endTimeRaw: '',
                 tag: '',
@@ -88,10 +89,12 @@ const WorklogList = ({worklogItems, bundlesWithTags}: { worklogItems: WorklogEnt
             (item) =>
                 `${item.startTimeRaw} - ${item.endTimeRaw}, ${item.bundle}, ${item.tag}`
         );
-        navigator.clipboard.writeText(copyArr.join("\r\n"));
+        navigator.clipboard.writeText(copyArr.join('\r\n'));
     };
 
-    const handleChangeInChild = (index: number) => {
+
+
+    const handleNewChildAtIndex = (index: number) => {
         addEntry({
             variables: {
                 record: {
@@ -99,7 +102,6 @@ const WorklogList = ({worklogItems, bundlesWithTags}: { worklogItems: WorklogEnt
                 },
             },
         }).then((response) => {
-            console.log(response);
             const newEntries = [...entries];
             const newItem: Entry = {
                 id: null,
@@ -140,17 +142,17 @@ const WorklogList = ({worklogItems, bundlesWithTags}: { worklogItems: WorklogEnt
                     </TableHead>
                     <TableBody>
                         {entries.map((entry: Entry) => {
-                            return (<WorklogNewItem key={entry.id} entry={entry} bundlesWithTags={bundlesWithTags} onChange={handleChangeInChild}/>)
+                            return (<WorklogNewItem key={entry.id}
+                                                    entry={entry}
+                                                    bundlesWithTags={bundlesWithTags}
+                                                    onAddNewRecord={handleNewChildAtIndex}/>)
                         })}
                     </TableBody>
                 </Table>
             </div>
             <div className="worklogEntriesFooter">
-                <Fab color="secondary" aria-label="add" size="small" onClick={() => {}}>
-                    <AddIcon sx={{ margin: 2 }} />
-                </Fab>
-                <Fab color="secondary" aria-label="add" size="small" onClick={() => {}}>
-                    <AssignmentIcon sx={{ margin: "2px" }} onClick={handleCopy} />
+                <Fab color="secondary" aria-label="add" size="small" onClick={handleCopy}>
+                    <AssignmentIcon sx={{margin: '2px'}}/>
                 </Fab>
             </div>
         </div>
