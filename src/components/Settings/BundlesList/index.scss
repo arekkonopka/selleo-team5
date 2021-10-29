@@ -1,4 +1,15 @@
 .bundlesList {
-  height: calc(100vh - 260px);
+  height: calc(100vh - 270px);
   width: 100%;
+}
+
+.bundleListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input {
+  min-width: 300px;
+  padding: 15px 0;
 }
