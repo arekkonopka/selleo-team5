@@ -87,12 +87,10 @@ const WorklogList = ({worklogItems, bundlesWithTags}: { worklogItems: WorklogEnt
     const handleCopy = () => {
         const copyArr = entries.map(
             (item) =>
-                `${item.startTimeRaw} - ${item.endTimeRaw}, ${item.bundle}, ${item.tag}`
+                `${item.startTimeRaw ?? '--'} - ${item.endTimeRaw ?? '--'}, ${item.bundle ?? '--'}, ${item.tag ?? '--'}`
         );
         navigator.clipboard.writeText(copyArr.join('\r\n'));
     };
-
-
 
     const handleNewChildAtIndex = (index: number) => {
         addEntry({

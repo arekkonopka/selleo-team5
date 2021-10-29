@@ -26,10 +26,10 @@ export const AppProviders: React.FC = ({children}) => {
     }
 
     if (!isAuthenticated) {
-        // loginWithRedirect({
-        //     audience: 'graphql-api',
-        //     scope: 'read',
-        // });
+        loginWithRedirect({
+            audience: 'graphql-api',
+            scope: 'read',
+        });
     }
 
     const getToken = async () => {

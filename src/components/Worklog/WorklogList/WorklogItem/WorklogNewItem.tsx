@@ -117,6 +117,7 @@ export function WorklogNewItem({
                 <Autocomplete
                     options={selectedBundle?.tags.map((tag: Tag) => tag.name) ?? []}
                     fullWidth
+                    disabled={!selectedBundle}
                     id="demo-simple-select"
                     renderInput={(params) => <TextField {...params} />}
                     onChange={(event, value: any) => {
